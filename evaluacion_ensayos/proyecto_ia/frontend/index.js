@@ -1,5 +1,6 @@
 // 1. Definir la URL base de tu backend
-const BASE_URL = "https://4902-152-201-44-26.ngrok-free.app";
+const BASE_URL = "https://evalumind.onrender.com";
+
 
 // 2. === Drag & Drop y botón personalizado ===
 let selectedFiles = [];
