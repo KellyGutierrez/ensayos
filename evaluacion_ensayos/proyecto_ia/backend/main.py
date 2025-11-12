@@ -77,8 +77,9 @@ def extract_text_from_file(file_path, extension):
             return ""
     else:
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
-                return f.read()
+            with open(file_path, "rb") as f:
+                content = f.read()
+
         except Exception as e:
             print(f"Error leyendo archivo {extension}: {e}")
             return ""
