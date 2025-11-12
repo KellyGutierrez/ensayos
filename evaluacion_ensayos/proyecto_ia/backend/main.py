@@ -85,10 +85,15 @@ def extract_text_from_file(file_path, extension):
             return ""
 
 def extract_author(text):
+    if not text or not isinstance(text, str):
+        return "Autor desconocido"
+    
     match = re.search(r'Autor:\s*(.+)', text, re.IGNORECASE)
     if match:
         return match.group(1).strip()
-    return "Desconocido"
+    else:
+        return "Autor no especificado"
+
 
 def review_with_ai(text, additional_instructions=""):
     system_message = {
@@ -137,10 +142,22 @@ def upload_files():
 
             extension = original_filename.rsplit(".", 1)[1].lower()
             text = extract_text_from_file(file_path, extension)
+
+            # Validar si se extrajo correctamente el texto
+            if not text or not isinstance(text, str):
+                print(f"No se pudo extraer texto de {original_filename}")
+                essays_info.append({
+                    "filename": original_filename,
+                    "error": "No se pudo extraer texto del archivo o está vacío"
+                })
+                continue  # pasa al siguiente archivo sin romper el flujo
+
             all_texts.append(text)
 
+            # Proteger la extracción del autor
             author = extract_author(text)
             review = review_with_ai(text, additional_instructions)
+
 
             unique_id = str(uuid4())
             audio_filename = f"{unique_id}.mp3"
