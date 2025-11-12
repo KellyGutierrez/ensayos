@@ -207,10 +207,11 @@ def upload_files():
             group_audio_url = None
 
     return jsonify({
-        "ensayos_procesados": essays_info,
-        "group_review": group_review,
-        "group_audio_url": group_audio_url
-    })
+    "ensayos_procesados": essays_info if essays_info else [],
+    "group_review": group_review or "",
+    "group_audio_url": group_audio_url or ""
+    }), 200
+
 
 @app.route("/audio/<path:filename>")
 def serve_audio(filename):
