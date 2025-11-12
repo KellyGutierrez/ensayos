@@ -1,7 +1,6 @@
 // 1. Definir la URL base de tu backend
 const BASE_URL = "https://evalumind.onrender.com";
 
-
 // 2. === Drag & Drop y botón personalizado ===
 let selectedFiles = [];
 
@@ -123,28 +122,30 @@ function displayResults(essays) {
 
     // Función para extraer solo la calificación
     function extractScore(review) {
-      if (!review || typeof review !== "string") return "Sin calificación";
       if (!review.includes("Calificación:")) return "Sin calificación";
       return review.split("Calificación:")[1].split("Comentarios:")[0].trim();
     }
 
+    // Función para extraer solo los comentarios sin calificación ni título de "Comentarios"
     function extractComments(review) {
-      if (!review || typeof review !== "string") return "Sin comentarios";
       if (!review.includes("Comentarios:")) return "Sin comentarios";
       
       let cleanReview = review.split("Comentarios:")[1];
+      
+      // Eliminar "Calificación: X" si aún aparece al inicio
       cleanReview = cleanReview.replace(/^Calificación:\s*\d+\s*/i, "").trim();
+      
       return cleanReview.split("Áreas de fortaleza:")[0].trim();
     }
 
+    // Función para extraer Áreas de Fortaleza
     function extractStrengths(review) {
-      if (!review || typeof review !== "string") return "No especificado";
       if (!review.includes("Áreas de fortaleza:")) return "No especificado";
       return review.split("Áreas de fortaleza:")[1].split("Áreas de mejora:")[0].trim();
     }
 
+    // Función para extraer Áreas de Mejora
     function extractImprovements(review) {
-      if (!review || typeof review !== "string") return "No especificado";
       if (!review.includes("Áreas de mejora:")) return "No especificado";
       return review.split("Áreas de mejora:")[1].trim();
     }

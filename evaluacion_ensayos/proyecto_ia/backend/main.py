@@ -77,23 +77,17 @@ def extract_text_from_file(file_path, extension):
             return ""
     else:
         try:
-            with open(file_path, "rb") as f:
-                content = f.read()
-
+            with open(file_path, "r", encoding="utf-8") as f:
+                return f.read()
         except Exception as e:
             print(f"Error leyendo archivo {extension}: {e}")
             return ""
 
 def extract_author(text):
-    if not text or not isinstance(text, str):
-        return "Autor desconocido"
-    
     match = re.search(r'Autor:\s*(.+)', text, re.IGNORECASE)
     if match:
         return match.group(1).strip()
-    else:
-        return "Autor no especificado"
-
+    return "Desconocido"
 
 def review_with_ai(text, additional_instructions=""):
     system_message = {
@@ -142,22 +136,10 @@ def upload_files():
 
             extension = original_filename.rsplit(".", 1)[1].lower()
             text = extract_text_from_file(file_path, extension)
-
-            # Validar si se extrajo correctamente el texto
-            if not text or not isinstance(text, str):
-                print(f"No se pudo extraer texto de {original_filename}")
-                essays_info.append({
-                    "filename": original_filename,
-                    "error": "No se pudo extraer texto del archivo o está vacío"
-                })
-                continue  # pasa al siguiente archivo sin romper el flujo
-
             all_texts.append(text)
 
-            # Proteger la extracción del autor
             author = extract_author(text)
             review = review_with_ai(text, additional_instructions)
-
 
             unique_id = str(uuid4())
             audio_filename = f"{unique_id}.mp3"
@@ -207,11 +189,10 @@ def upload_files():
             group_audio_url = None
 
     return jsonify({
-    "ensayos_procesados": essays_info if essays_info else [],
-    "group_review": group_review or "",
-    "group_audio_url": group_audio_url or ""
-    }), 200
-
+        "ensayos_procesados": essays_info,
+        "group_review": group_review,
+        "group_audio_url": group_audio_url
+    })
 
 @app.route("/audio/<path:filename>")
 def serve_audio(filename):
