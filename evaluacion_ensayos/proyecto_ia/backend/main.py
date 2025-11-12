@@ -10,6 +10,13 @@ from docx import Document
 from dotenv import load_dotenv
 from flask_cors import CORS
 
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+import storage
+
+
 # Cargar variables del .env
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
