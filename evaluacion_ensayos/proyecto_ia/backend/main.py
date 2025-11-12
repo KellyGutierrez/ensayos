@@ -93,8 +93,8 @@ def review_with_ai(text, additional_instructions=""):
     system_message = {
         "role": "system",
         "content": (
-            "Eres un evaluador de ensayos académicos. Tu tarea es analizar el ensayo y devolver una respuesta EXACTA en el siguiente formato, sin agregar texto adicional:\n"
-            "Calificación: <número entre 1 y 10>\n"
+            "Eres un evaluador académico colombiano. Tu tarea es analizar el ensayo y devolver una respuesta EXACTA en el siguiente formato, sin agregar texto adicional:\n"
+            "Calificación: <número entre 0.0 y 5.0, usando un decimal> \n"
             "Comentarios: <explicación breve y general del porqué de la calificación>\n"
             "Áreas de fortaleza: <enfocadas en la redacción del ensayo>\n"
             "Áreas de mejora: <sugerencias concretas para mejorar el ensayo>\n"
@@ -102,6 +102,7 @@ def review_with_ai(text, additional_instructions=""):
             f"Instrucciones adicionales: {additional_instructions}"
         )
     }
+
     user_message = {
         "role": "user",
         "content": f"Ensayo:\n{text}"
