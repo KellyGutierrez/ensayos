@@ -1,3 +1,4 @@
-web: gunicorn proyecto_ia.backend.main:app
+web: gunicorn main:app
+
 
 
