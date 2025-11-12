@@ -1,0 +1,7 @@
+pip install openai
+pip install gTTS
+pip install flask
+pip install flask-cors
+pip install python-docx
+pip install python-dotenv
+pip install requests
