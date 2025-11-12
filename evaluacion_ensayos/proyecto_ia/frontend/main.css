@@ -1,281 +1,238 @@
+/* ===== VARIABLES ===== */
+:root {
+  --violeta: #9b5de5;
+  --rosa: #f15bb5;
+  --azul: #00bbf9;
+  --cian: #00f5d4;
+  --negro: #0a0516;
+  --blanco: #ffffff;
+  --fondo-glass: rgba(255, 255, 255, 0.1);
+}
+
+/* ===== BASE ===== */
 * {
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  body {
-    margin: 0;
-    background: linear-gradient(to right, #e0ecf8, #f9fafe);
-    color: #333;
-  }
-  
-  header {
-    background: linear-gradient(135deg, #1e90ff, #4facfe);
-    padding: 2rem;
-    text-align: center;
-    color: white;
-    font-size: 2rem;
-    font-weight: 600;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .container {
-    max-width: 600px;
-    margin: 3rem auto;
-    background: white;
-    padding: 2rem;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-  }
-  
-  .container:hover {
-    transform: scale(1.01);
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-  }
-  
-  input[type="file"],
-  input[type="text"] {
-    width: 100%;
-    padding: 0.7rem;
-    margin-bottom: 1.2rem;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-  }
-  
-  button {
-    background: #1e90ff;
-    color: white;
-    border: none;
-    padding: 0.9rem 1.5rem;
-    border-radius: 12px;
-    font-weight: bold;
-    font-size: 1rem;
-    width: 100%;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-  }
-  
-  button:hover {
-    background: #0d75d8;
-    transform: scale(1.02);
-  }
-  
-  
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
 
-  
-  h2 {
-    text-align: center;
-    color: #1e3a5f;
-    margin-top: 2.5rem;
-    font-weight: 600;
-  }
-  
-  .fade-in {
-    animation: fadeIn 1.2s ease-out forwards;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-    /* ====== Estilos Generales ====== */
-  table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 10px;  /* Espacio entre filas */
-    font-family: "Poppins", sans-serif;
-    table-layout: fixed; /* 🔥 Evita que las celdas sean demasiado anchas */
+body {
+  margin: 0;
+  color: var(--blanco);
+  overflow-x: hidden;
+  background: radial-gradient(circle at 20% 20%, #210033, #0b0014);
+}
+
+/* ===== FONDO ANIMADO GALÁCTICO ===== */
+.background, .stars, .twinkling {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0; left: 0;
+  z-index: -3;
+}
+
+.background {
+  background: linear-gradient(120deg, var(--violeta), #2a0845);
+  filter: brightness(0.8);
+}
+
+.stars {
+  background: url("https://www.transparenttextures.com/patterns/stardust.png");
+  animation: moveStars 100s linear infinite;
+}
+
+.twinkling {
+  background: url("https://www.transparenttextures.com/patterns/dark-mosaic.png");
+  opacity: 0.3;
+  animation: twinkle 5s infinite alternate;
+}
+
+@keyframes moveStars {
+  from {background-position: 0 0;}
+  to {background-position: -10000px 10000px;}
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.2; }
+  100% { opacity: 0.5; }
+}
+
+/* ===== HEADER ===== */
+.glass-header {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.glass-header h1 {
+  font-size: 2.3rem;
+  background: linear-gradient(90deg, var(--violeta), var(--rosa), var(--cian));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glass-header p {
+  color: #ccc;
+  margin-top: 8px;
+  font-size: 1.1rem;
+}
+
+/* ===== FORMULARIO PRINCIPAL ===== */
+.glass-container {
+  max-width: 720px;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  background: var(--fondo-glass);
+  border-radius: 20px;
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 35px rgba(123, 47, 247, 0.3);
+  animation: fadeIn 1s ease;
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.6rem;
+  color: var(--cian);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1.5rem;
+}
+
+/* ===== DROP AREA ===== */
+.drop-area {
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  padding: 2rem;
+  text-align: center;
+  transition: 0.4s;
+  background: rgba(255, 255, 255, 0.07);
+  position: relative;
+}
+
+.drop-area:hover {
+  border-color: var(--rosa);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.upload-icon {
+  font-size: 3rem;
+  color: var(--cian);
+  margin-bottom: 0.5rem;
+}
+
+.drop-area button {
+  background: linear-gradient(135deg, var(--rosa), var(--violeta));
+  color: white;
+  border: none;
+  padding: 0.8rem 1.3rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.drop-area button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--rosa);
+}
+
+/* ===== INPUTS ===== */
+input[type="text"] {
+  width: 100%;
+  padding: 0.9rem;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  margin-top: 1rem;
+  outline: none;
+  transition: 0.3s;
+}
+
+input[type="text"]:focus {
+  box-shadow: 0 0 10px var(--cian);
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ===== BOTÓN PRINCIPAL ===== */
+.btn-gradient {
+  margin-top: 1.2rem;
+  background: linear-gradient(135deg, var(--violeta), var(--rosa), var(--azul));
+  border: none;
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px var(--rosa);
+}
+
+/* ===== RESULTADOS ===== */
+.results-section {
+  margin: 3rem auto;
+  max-width: 900px;
+  text-align: center;
+}
+
+.glass-table {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  margin-top: 1rem;
+  overflow-x: auto;
+}
+
+.results-section h2 {
+  font-size: 1.5rem;
+  color: var(--azul);
+}
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  padding: 2rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .glass-container {
+    padding: 1.5rem;
+    width: 90%;
   }
 
-  /* ====== Encabezados de la Tabla ====== */
-  th {
-    background-color: #007bff;
-    color: white;
-    padding: 12px;
-    text-align: left;
-    font-weight: bold;
-    text-transform: uppercase;
-    word-wrap: break-word; /* 🔥 Asegura que el texto se ajuste */
+  h1 {
+    font-size: 1.8rem;
   }
 
-  /* ====== Filas y Celdas ====== */
-  td {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  /* Efecto de tarjeta */
-    
-  }
-
-  /* ====== Evaluación (Diseño Tipo Tarjeta) ====== */
-  .evaluation-container {
-    background: #f8f9fa;
-    padding: 12px;
-    border-radius: 8px;
-    border-left: 5px solid #007bff;
-  }
-
-  /* ====== Textos Destacados ====== */
-  .evaluation-container strong {
-    color: #007bff;
-    font-weight: 600;
-    display: block;
-    margin-top: 8px;
-  }
-
-  /* ====== Audio ====== */
-  audio {
-    width: 100%; /* Hace que el audio ocupe el ancho completo */
-    max-width: 100%; /* Evita que se desborde */
-  }
-
-
-  .full-width-audio {
-    width: 100%; /* Hace que el audio ocupe el ancho total de su contenedor */
-    max-width: 100%; /* Evita que sobrepase la columna */
-  }
-
-
-  /* ====== Ajustes en Responsividad ====== */
-  @media (max-width: 768px) {
-    table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-
-    td {
-        display: block;
-        width: 100%;
-    }
-  }
-
-
-
-
-    /* Hacer que la tabla sea responsive */
-    @media (max-width: 768px) {
-      table {
-        width: 100%;
-      }
-
-      th, td {
-        padding: 0.5rem;
-        font-size: 0.9rem;
-      }
-    }
-  
-    .evaluation-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-      background-color: #f8faff;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .evaluation-table th {
-      background-color: #3b82f6;
-      color: white;
-      padding: 10px;
-      text-align: left;
-      font-size: 18px;
-  }
-  
-  .evaluation-table td {
-      padding: 10px;
-      border-bottom: 1px solid #ddd;
-  }
-  
-  .evaluation-table audio {
-      width: 100%;
-  }
-  
-    
-  
-  #status {
-    text-align: center;
-    margin-top: 1rem;
-    font-weight: bold;
-  }
-  
   .drop-area {
-    border: 5px dashed #ddd;
-    height: 300px;
-    width: 500px;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    transition: all 0.3s ease-in-out;
+    padding: 1.5rem;
   }
-  
-  
-  .drop-area.active {
-    background-color: #b8d4fe;
-    color: black;
-    border: 2px dashed #618ac9;
-  }
-  
-  .drop-area h2 {
-    font-size: 30px;
-    font-weight: 500;
-    color: #333;
-  }
-  .drop-area span {
-    font-size: 25px;
-    font-weight: 500;
-    color: #000;
-  }
-  
-  .drop-area button{
-    padding: 10px 25px;
-    font-size: 20px;
-    border: 0;
-    outline: none;
-    background-color: #5256ad;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 20px;
-  }
-
-  .file-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    border: solid 1px #ddd;
-  }
-  
-  #preview {
-    margin-top: 10px;
-  }
-  
-  .status-text {
-    padding: 0 10px;
-  }
-
-  .success{
-    color: #52ad5a
-  }
-  .failure {
-    color: #ff0000
-  }
-
-  
+}

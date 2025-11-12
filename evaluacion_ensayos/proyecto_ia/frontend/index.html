@@ -3,64 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Evaluador de Ensayos</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <title>Evaluador de Ensayos IA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="main.css" />
 </head>
 <body>
-  <header class="fade-in">Evaluador de Ensayos</header>
+  <div class="background"></div>
+  <div class="stars"></div>
+  <div class="twinkling"></div>
 
-  <main>
-    <div class="container fade-in">
+  <header class="glass-header fade-in">
+    <h1><i class="fa-solid fa-robot"></i> Evaluador de Ensayos</h1>
+    <p>💫 Sube tus documentos y obtén una evaluación inteligente y personalizada</p>
+  </header>
+
+  <main class="fade-in">
+    <div class="glass-container">
       <form id="upload-form">
-        <label for="file-input">Selecciona uno o más archivos:</label>
-        
-        <div class="drop-area">
-          <h2>Arrastra y suelta los archivos</h2>
-          <span>O</span>
-          <button id="custom-button" type="button">Selecciona tus archivos</button>
+        <h2><i class="fa-solid fa-upload"></i> Subir Archivos</h2>
+        <p class="subtitle">📎 Arrastra tus archivos o selecciónalos manualmente</p>
+
+        <div class="drop-area" id="drop-area">
+          <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+          <h3>Arrastra y suelta aquí</h3>
+          <span>— o —</span>
+          <button id="custom-button" type="button">
+            <i class="fa-solid fa-folder-open"></i> Seleccionar archivos
+          </button>
           <input type="file" id="input-file" hidden multiple>
         </div>
-        
-        <div id="preview"></div>
 
-        <label for="instructions">Instrucciones adicionales:</label>
-        <input type="text" id="instructions" name="instructions" placeholder="Ej: Evalúa la coherencia del texto" />
+        <div id="preview" class="file-preview"></div>
+
+        <label for="instructions"><i class="fa-solid fa-wand-magic-sparkles"></i> Instrucciones adicionales:</label>
+        <input type="text" id="instructions" name="instructions" placeholder="Ej: Evalúa la coherencia y gramática del texto" />
       
-        <button type="submit">📤 Subir Archivos</button>
+        <button type="submit" class="btn-gradient">
+          <i class="fa-solid fa-rocket"></i> Evaluar Ensayos
+        </button>
         <div id="status"></div>
       </form>
     </div>
 
-    <section>
-      <h2 class="fade-in">📄 Resultados Individuales</h2>
-      <div id="results">
-        <table id="results-table">
-          <thead>
-            <tr>
-              <th>Autor</th>
-              <th>Archivo</th>
-              <th>Evaluación</th>
-              <th>Audio</th>
-            </tr>
-          </thead>
-          <tbody id="results-body">
-            <!-- Aquí se agregarán las filas dinámicamente con JavaScript -->
-          </tbody>
-        </table>
-      </div>
+    <section class="results-section">
+      <h2><i class="fa-solid fa-file-lines"></i> Resultados Individuales</h2>
+      <div id="results" class="glass-table"></div>
     </section>
 
-    <section>
-      <h2 class="fade-in">🧑‍🤝‍🧑 Evaluación Grupal</h2>
-      <div id="group-review-container"></div> <!-- Aquí se generará la tabla dinámicamente -->
+    <section class="results-section">
+      <h2><i class="fa-solid fa-brain"></i> Evaluación Grupal</h2>
+      <div id="group-review-container" class="glass-table"></div>
     </section>
-    
-  
-  
   </main>
+
+  <footer>
+    <p>🌙 Desarrollado con ❤️ y JEFT KDGD — <strong>Evaluador de Ensayos</strong> © 2025</p>
+  </footer>
 
   <script src="index.js"></script>
 </body>
 </html>
-
