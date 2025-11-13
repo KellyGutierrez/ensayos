@@ -10,8 +10,10 @@ from docx import Document
 from dotenv import load_dotenv
 from flask_cors import CORS
 
+
 import sys
 import os
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 import storage
@@ -110,7 +112,7 @@ def review_with_ai(text, additional_instructions=""):
     }
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[system_message, user_message],
             max_tokens=300,
             temperature=0.7,
@@ -234,7 +236,7 @@ def group_review_with_ai(texts, additional_instructions=""):
     }
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[system_message, user_message],
             max_tokens=300,
             temperature=0.7,
@@ -248,4 +250,3 @@ def group_review_with_ai(texts, additional_instructions=""):
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
 
-#Para correr ngrok, se usa el comando ".\ngrok.exe http 5000"

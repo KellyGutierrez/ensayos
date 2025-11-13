@@ -122,7 +122,7 @@ function displayResults(essays) {
 
   // Crear encabezado de la tabla
   const headerRow = document.createElement("tr");
-  ["Autor", "Archivo", "Evaluación", "Audio"].forEach(header => {
+  ["Autor", "Archivo", "Evaluación", "Audio", "Descargar PDF"].forEach(header => {
     const th = document.createElement("th");
     th.innerText = header;
     headerRow.appendChild(th);
@@ -149,31 +149,24 @@ function displayResults(essays) {
       </div>
     `;
 
-    // Función para extraer solo la calificación
+    // Funciones internas de extracción
     function extractScore(review) {
       if (!review.includes("Calificación:")) return "Sin calificación";
       return review.split("Calificación:")[1].split("Comentarios:")[0].trim();
     }
 
-    // Función para extraer solo los comentarios sin calificación ni título de "Comentarios"
     function extractComments(review) {
       if (!review.includes("Comentarios:")) return "Sin comentarios";
-      
       let cleanReview = review.split("Comentarios:")[1];
-      
-      // Eliminar "Calificación: X" si aún aparece al inicio
-      cleanReview = cleanReview.replace(/^Calificación:\s*\d+\s*/i, "").trim();
-      
+      cleanReview = cleanReview.replace(/^Calificación:\s*\d+(\.\d+)?\s*/i, "").trim();
       return cleanReview.split("Áreas de fortaleza:")[0].trim();
     }
 
-    // Función para extraer Áreas de Fortaleza
     function extractStrengths(review) {
       if (!review.includes("Áreas de fortaleza:")) return "No especificado";
       return review.split("Áreas de fortaleza:")[1].split("Áreas de mejora:")[0].trim();
     }
 
-    // Función para extraer Áreas de Mejora
     function extractImprovements(review) {
       if (!review.includes("Áreas de mejora:")) return "No especificado";
       return review.split("Áreas de mejora:")[1].trim();
@@ -183,30 +176,54 @@ function displayResults(essays) {
     if (essay.audio_url) {
       const audio = document.createElement("audio");
       audio.setAttribute("controls", "");
-
       const source = document.createElement("source");
-      // Se usa BASE_URL para construir la ruta completa del audio
       source.src = `${BASE_URL}${essay.audio_url}`;
       source.type = "audio/mpeg";
-
       audio.appendChild(source);
-      audio.load(); // 🔥 Forzar recarga del audio
-
+      audio.load();
       tdAudio.appendChild(audio);
     }
 
-    row.appendChild(tdAutor);
-    row.appendChild(tdArchivo);
-    row.appendChild(tdEvaluacion);
-    row.appendChild(tdAudio);
+    // 📄 Nueva columna: Descargar PDF
+const tdPDF = document.createElement("td");
+const btnPDF = document.createElement("button");
+btnPDF.innerText = "Descargar";
+btnPDF.classList.add("pdf-button");
 
-    table.appendChild(row);
+btnPDF.classList.add("pdf-button", "download-btn"); // <-- agregamos clase
+btnPDF.addEventListener("click", () => {
+  generatePDF(essay);
+});
+tdPDF.appendChild(btnPDF);
+
+row.appendChild(tdAutor);
+row.appendChild(tdArchivo);
+row.appendChild(tdEvaluacion);
+row.appendChild(tdAudio);
+row.appendChild(tdPDF);
+
+table.appendChild(row);
+
   });
 
   resultsDiv.appendChild(table);
-  // **📜 Hacer scroll automático hacia la tabla de resultados 📜**
   resultsDiv.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  // 🔧 Función auxiliar para generar PDF desde el navegador
+  function generatePDF(essay) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(14);
+    doc.text("Evaluación del Ensayo", 20, 20);
+    doc.setFontSize(12);
+    const text = essay.review || "Sin evaluación disponible.";
+    const lines = doc.splitTextToSize(text, 170);
+    doc.text(lines, 20, 30);
+    doc.save(`${essay.filename.replace(/\.[^/.]+$/, "")}_evaluacion.pdf`);
+  }
 }
+
 
 function displayGroupReview(review, audio_url) {
   const container = document.getElementById("group-review-container");
