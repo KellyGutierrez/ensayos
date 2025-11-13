@@ -36,7 +36,8 @@ PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))  # Carpeta que cont
 UPLOAD_FOLDER = os.path.join(PROJECT_ROOT, "uploads")
 AUDIO_FOLDER = os.path.join(PROJECT_ROOT, "audio")
 
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'docx', 'csv'}
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'doc', 'docx', 'csv'}
+
 
 # Crear las carpetas si no existen
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
