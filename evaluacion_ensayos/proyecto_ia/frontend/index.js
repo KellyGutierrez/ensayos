@@ -80,6 +80,7 @@ document.getElementById("upload-form").addEventListener("submit", async (e) => {
 
   statusDiv.innerText = "Subiendo y evaluando archivos...";
 
+
   const formData = new FormData();
   selectedFiles.forEach(f => formData.append("files", f));
   formData.append("instructions", instructionsInput.value);
