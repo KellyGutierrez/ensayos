@@ -10,10 +10,8 @@ from docx import Document
 from dotenv import load_dotenv
 from flask_cors import CORS
 
-
 import sys
 import os
-
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 import storage
@@ -38,8 +36,7 @@ PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))  # Carpeta que cont
 UPLOAD_FOLDER = os.path.join(PROJECT_ROOT, "uploads")
 AUDIO_FOLDER = os.path.join(PROJECT_ROOT, "audio")
 
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'doc', 'docx', 'csv'}
-
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'docx', 'csv'}
 
 # Crear las carpetas si no existen
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -250,3 +247,4 @@ def group_review_with_ai(texts, additional_instructions=""):
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
 
+#Para correr ngrok, se usa el comando ".\ngrok.exe http 5000"
