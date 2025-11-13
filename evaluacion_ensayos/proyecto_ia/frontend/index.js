@@ -1,13 +1,15 @@
-// 1. Definir la URL base de tu backend
+// 1️⃣ URL base del backend
 const BASE_URL = "https://evalumind.onrender.com";
 
-// 2. === Drag & Drop y botón personalizado ===
+// 2️⃣ Variables
 let selectedFiles = [];
 
 const dropArea = document.querySelector(".drop-area");
 const dragText = dropArea.querySelector("h2");
 const button = dropArea.querySelector("button");
 const input = dropArea.querySelector("#input-file");
+const preview = document.querySelector("#preview");
+
 const iconMap = {
   'docx': 'https://cdn-icons-png.flaticon.com/512/281/281760.png',
   'pdf': 'https://cdn-icons-png.flaticon.com/512/337/337946.png',
@@ -15,75 +17,88 @@ const iconMap = {
   'csv': 'https://cdn-icons-png.flaticon.com/512/888/888879.png'
 };
 
-button.addEventListener("click", (e) => {
-  input.click();
-});
+// 3️⃣ Seleccionar archivos con el botón
+button.addEventListener("click", () => input.click());
 
+// 4️⃣ Cuando se seleccionan archivos
 input.addEventListener("change", (e) => {
-  const files = e.target.files; // ← CORRECTO
-  dropArea.classList.add("active");
+  const files = e.target.files;
   showFiles(files);
-  dropArea.classList.remove("active");
 });
 
+// 5️⃣ Drag & Drop
 dropArea.addEventListener("dragover", (e) => {
   e.preventDefault();
   dropArea.classList.add("active");
   dragText.textContent = "Suelta para subir los archivos";
 });
 
-dropArea.addEventListener("dragleave", (e) => {
+dropArea.addEventListener("dragleave", () => {
   dropArea.classList.remove("active");
   dragText.textContent = "Arrastra y suelta los archivos";
 });
 
 dropArea.addEventListener("drop", (e) => {
   e.preventDefault();
-  const files = e.dataTransfer.files;
-  input.files = files; // 👈 Esto es CLAVE
   dropArea.classList.remove("active");
   dragText.textContent = "Arrastra y suelta los archivos";
+  
+  const files = e.dataTransfer.files;
   showFiles(files);
 });
 
-// 3. === Lógica para manejar el envío del formulario ===
-document.getElementById("upload-form").addEventListener("submit", async function(e) {
-  e.preventDefault();
-  console.log("Formulario enviado"); // ← DEBE aparecer
+// 6️⃣ Mostrar archivos seleccionados
+function showFiles(files) {
+  selectedFiles = Array.from(files); // Guardar los archivos
+  preview.innerHTML = ""; // Limpiar preview anterior
 
-  const fileInput = document.getElementById("input-file");
-  const instructionsInput = document.getElementById("instructions");
+  selectedFiles.forEach(file => {
+    const ext = file.name.split('.').pop().toLowerCase();
+    const icon = iconMap[ext] || 'https://cdn-icons-png.flaticon.com/512/1828/1828665.png';
+    preview.innerHTML += `
+      <div class="file-container">
+        <img src="${icon}" width="40" alt="icono">
+        <span>${file.name}</span>
+      </div>`;
+  });
+}
+
+// 7️⃣ Enviar archivos al backend
+document.getElementById("upload-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
   const statusDiv = document.getElementById("status");
+  const instructionsInput = document.getElementById("instructions");
+
+  if (selectedFiles.length === 0) {
+    alert("Por favor selecciona o arrastra al menos un archivo.");
+    return;
+  }
 
   statusDiv.innerText = "Subiendo y evaluando archivos...";
 
-  if (selectedFiles.length === 0) {
-    alert("Por favor selecciona al menos un archivo.");
-    return;
-  }
-  
   const formData = new FormData();
-  for (let i = 0; i < selectedFiles.length; i++) {
-    formData.append("files", selectedFiles[i]);
-  }
+  selectedFiles.forEach(f => formData.append("files", f));
   formData.append("instructions", instructionsInput.value);
 
   try {
-    // Reemplaza la URL local por la URL definida en BASE_URL
     const response = await fetch(`${BASE_URL}/upload`, {
       method: "POST",
       body: formData
     });
 
+    if (!response.ok) throw new Error("Error HTTP: " + response.status);
+
     const data = await response.json();
     displayResults(data.ensayos_procesados);
     displayGroupReview(data.group_review, data.group_audio_url);
-    statusDiv.innerText = "Evaluación completada correctamente.";
+
+    statusDiv.innerText = "Evaluación completada correctamente ✅";
   } catch (error) {
     console.error("Error al enviar archivos:", error);
-    statusDiv.innerText = "Error al enviar archivos.";
+    statusDiv.innerText = "❌ Error al enviar archivos.";
   }
 });
+
 
 function displayResults(essays) {
   const resultsDiv = document.getElementById("results");
@@ -255,62 +270,4 @@ function createTableSubtitle(title) {
   cell.textContent = title;
   row.appendChild(cell);
   return row;
-}
-
-function showFiles(files) {
-  selectedFiles = Array.from(files); // Guarda los archivos para el submit
-  for (let i = 0; i < files.length; i++) {
-    processFile(files[i]);
-  }
-}
-
-function processFile(file) {
-  const fileName = file.name;
-  const fileExtension = fileName.split('.').pop().toLowerCase();
-  const validExtensions = ['txt', 'pdf', 'docx', 'csv'];
-
-  if (validExtensions.includes(fileExtension)) {
-    const id = `file-${Math.random().toString(32).substring(7)}`;
-    const iconUrl = iconMap[fileExtension] || 'https://cdn-icons-png.flaticon.com/512/1828/1828665.png'; // ícono genérico
-
-    const image = `
-      <div id="${id}" class="file-container">
-        <img src="${iconUrl}" alt="${file.name}" width="40" style="margin-right: 10px;">
-        <div class="status">
-          <span>${file.name}</span>
-          <span class="status-text">Loading...</span>
-        </div>
-      </div>
-    `;
-
-    const html = document.querySelector("#preview").innerHTML;
-    document.querySelector("#preview").innerHTML = image + html;
-
-    uploadFile(file, id);
-
-    console.log("Archivo válido:", fileName);
-  } else {
-    alert("No es un archivo válido: " + fileName);
-  }
-}
-
-async function uploadFile(file, id) {
-  const formData = new FormData();
-  formData.append("file", file);
-
-  try {
-    // Se usa BASE_URL para la petición de subida
-    const response = await fetch(`${BASE_URL}/upload`, {
-      method: "POST",
-      body: formData,
-    });
-
-    const responseText = await response.text();
-
-    document.querySelector(`#${id} .status-text`).innerHTML =
-      `<span class="success">Archivo subido correctamente...</span>`;
-  } catch (error) {
-    document.querySelector(`#${id} .status-text`).innerHTML =
-      `<span class="error">Error al subir archivo</span>`;
-  }
 }
