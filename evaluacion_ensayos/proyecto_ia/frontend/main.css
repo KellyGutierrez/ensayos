@@ -384,3 +384,43 @@ footer {
 
 
 
+
+/* === Lista de archivos subidos === */
+#fileList {
+  margin-top: 1rem;
+}
+
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--blanco);
+  font-size: 0.9rem;
+  backdrop-filter: blur(8px);
+}
+
+.file-item .file-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Botón X */
+.remove-file {
+  background: transparent;
+  border: none;
+  color: var(--rosa);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+}
+
+.remove-file:hover {
+  transform: scale(1.2);
+  color: var(--cian);
+}

@@ -55,16 +55,44 @@ function showFiles(files) {
 
   preview.innerHTML = ""; // Limpiar preview anterior
 
-  selectedFiles.forEach(file => {
+  selectedFiles.forEach((file, index) => {
     const ext = file.name.split('.').pop().toLowerCase();
     const icon = iconMap[ext] || 'https://cdn-icons-png.flaticon.com/512/1828/1828665.png';
-    preview.innerHTML += `
-      <div class="file-container">
-        <img src="${icon}" width="40" alt="icono">
-        <span>${file.name}</span>
-      </div>`;
+    
+    // Crear contenedor de archivo
+    const fileContainer = document.createElement("div");
+    fileContainer.classList.add("file-container");
+
+    // Icono del archivo
+    const img = document.createElement("img");
+    img.src = icon;
+    img.width = 40;
+    img.alt = "icono";
+
+    // Nombre del archivo
+    const span = document.createElement("span");
+    span.textContent = file.name;
+
+    // Botón de eliminar ❌
+    const removeBtn = document.createElement("button");
+    removeBtn.innerHTML = "❌";
+    removeBtn.classList.add("remove-btn");
+    removeBtn.title = "Eliminar archivo";
+
+    removeBtn.addEventListener("click", () => {
+      // Eliminar el archivo del arreglo y refrescar la vista
+      selectedFiles.splice(index, 1);
+      showFiles([]); // Recargar vista con archivos actualizados
+    });
+
+    // Ensamblar elementos
+    fileContainer.appendChild(img);
+    fileContainer.appendChild(span);
+    fileContainer.appendChild(removeBtn);
+    preview.appendChild(fileContainer);
   });
 }
+
 
 // 7️⃣ Enviar archivos al backend
 document.getElementById("upload-form").addEventListener("submit", async (e) => {
