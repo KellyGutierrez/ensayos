@@ -238,3 +238,143 @@ footer {
     padding: 1.5rem;
   }
 }
+/* ===== AJUSTE TABLA DE RESULTADOS INDIVIDUALES ===== */
+.glass-table table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.glass-table th,
+.glass-table td {
+  padding: 12px 16px;
+  vertical-align: top;
+  color: var(--blanco);
+}
+
+/* Aumentar el ancho de la columna de Evaluación (3ra columna) */
+.glass-table td:nth-child(3),
+.glass-table th:nth-child(3) {
+  width: 45%;
+  text-align: justify;
+  white-space: normal;
+  word-wrap: break-word;
+  line-height: 1.6;
+}
+
+/* Que el texto no quede centrado en columnas */
+.glass-table td {
+  text-align: left;
+}
+
+/* Aumentar espacio entre filas */
+.glass-table tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Mejor visibilidad de títulos */
+.glass-table th {
+  font-weight: 600;
+  color: var(--cian);
+}
+
+/* Justificar el texto de comentarios */
+.glass-table td:nth-child(3) strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--rosa);
+}
+
+.glass-table td:nth-child(3) {
+  max-width: 600px;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  .glass-table td:nth-child(3),
+  .glass-table th:nth-child(3) {
+    width: 100%;
+    display: block;
+  }
+}
+/* === AJUSTE VISUAL TABLA DE RESULTADOS INDIVIDUALES === */
+.glass-table table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.glass-table th,
+.glass-table td {
+  padding: 12px 16px;
+  vertical-align: top;
+  color: var(--blanco);
+  text-align: left;
+}
+
+/* Columna 1: Autor (estrecha) */
+.glass-table td:nth-child(1),
+.glass-table th:nth-child(1) {
+  width: 15%;
+  white-space: nowrap;
+}
+
+/* Columna 2: Archivo (estrecha) */
+.glass-table td:nth-child(2),
+.glass-table th:nth-child(2) {
+  width: 20%;
+  word-break: break-word;
+}
+
+/* Columna 3: Evaluación (más ancha) */
+.glass-table td:nth-child(3),
+.glass-table th:nth-child(3) {
+  width: 55%;
+  text-align: justify;
+  white-space: normal;
+  word-wrap: break-word;
+  line-height: 1.7;
+  color: var(--blanco);
+}
+
+/* Columna 4: Audio (estrecha) */
+.glass-table td:nth-child(4),
+.glass-table th:nth-child(4) {
+  width: 15%;
+  text-align: center;
+}
+
+/* Bordes y legibilidad */
+.glass-table tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-table th {
+  font-weight: 600;
+  color: var(--cian);
+}
+
+.glass-table td:nth-child(3) strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--rosa);
+}
+
+/* Adaptación para pantallas pequeñas */
+@media (max-width: 768px) {
+  .glass-table table,
+  .glass-table thead,
+  .glass-table tbody,
+  .glass-table th,
+  .glass-table td,
+  .glass-table tr {
+    display: block;
+    width: 100%;
+  }
+
+  .glass-table td:nth-child(3),
+  .glass-table th:nth-child(3) {
+    width: 100%;
+  }
+}
+

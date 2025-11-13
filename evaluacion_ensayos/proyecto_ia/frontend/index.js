@@ -23,8 +23,18 @@ button.addEventListener("click", () => input.click());
 // 4️⃣ Cuando se seleccionan archivos
 input.addEventListener("change", (e) => {
   const files = e.target.files;
-  showFiles(files);
+  if (files && files.length > 0) {
+    showFiles(files);
+
+    // 🔹 Asegura que los archivos se guarden correctamente
+    selectedFiles = [...selectedFiles, ...Array.from(files)];
+
+    // 🔹 Limpia el mensaje de error si ya hay archivos
+    const statusDiv = document.getElementById("status");
+    statusDiv.innerText = "";
+  }
 });
+
 
 // 5️⃣ Drag & Drop
 dropArea.addEventListener("dragover", (e) => {
@@ -49,7 +59,9 @@ dropArea.addEventListener("drop", (e) => {
 
 // 6️⃣ Mostrar archivos seleccionados
 function showFiles(files) {
-  selectedFiles = Array.from(files); // Guardar los archivos
+  // Agregar los nuevos archivos sin borrar los anteriores
+  selectedFiles = [...selectedFiles, ...Array.from(files)];
+
   preview.innerHTML = ""; // Limpiar preview anterior
 
   selectedFiles.forEach(file => {
@@ -69,12 +81,14 @@ document.getElementById("upload-form").addEventListener("submit", async (e) => {
   const statusDiv = document.getElementById("status");
   const instructionsInput = document.getElementById("instructions");
 
-  if (selectedFiles.length === 0) {
-    alert("Por favor selecciona o arrastra al menos un archivo.");
+  // ✅ Nueva verificación más robusta
+  if (!selectedFiles || selectedFiles.length === 0) {
+    statusDiv.innerText = "⚠️ No se ha seleccionado ningún archivo.";
     return;
   }
 
   statusDiv.innerText = "Subiendo y evaluando archivos...";
+
 
   const formData = new FormData();
   selectedFiles.forEach(f => formData.append("files", f));
@@ -265,7 +279,6 @@ function createTableSubtitle(title) {
   const cell = document.createElement("td");
   cell.setAttribute("colspan", "2");
   cell.style.fontWeight = "bold";
-  cell.style.backgroundColor = "#f2f2f2";
   cell.style.padding = "10px";
   cell.textContent = title;
   row.appendChild(cell);
